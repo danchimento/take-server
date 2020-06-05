@@ -36,8 +36,6 @@ exports.things = functions.https.onRequest(async (req, res) => {
     // Update the thing record with the new rating
     var querySnapshot = await (admin.firestore().collection('things').get());
 
-    console.log(querySnapshot);
-
     querySnapshot.forEach((doc) => {
         const data = doc.data();
         console.log(data);
@@ -57,13 +55,9 @@ exports.search = functions.https.onRequest(async (req, res) => {
     var things = [];
     var filter = req.query.filter;
 
-    console.log("Filter: ", filter);
-    
     const fireSQL = new FireSql.FireSQL(admin.firestore());
 
     var queryResults = await fireSQL.query(`SELECT * FROM things WHERE name like '${filter}%'`);
-
-    console.log(queryResults);
 
     queryResults.forEach((doc) => {
         const data = doc;
